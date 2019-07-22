@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+    <!--开启SpringMvc注解-->
+    <mvc:annotation-driven></mvc:annotation-driven>
+    <!--配置扫面Contrller控制器的包的范围-->
+    <context:component-scan base-package="com.hebing"></context:component-scan>
+    <bean name="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+        <!--配置spring容器加载的默认路径的前缀-->
+        <property name="prefix" value="/WEB-INF/views/"></property>
+
+        <!--配置spring容器加载的默认的后缀-->
+        <property name="suffix" value=".jsp"></property>
+
+        <!--重定向的时候是否添加路径，如果true则自动写成/WEB-INF/views/index.jsp，否则全路径访问-->
+        <property name="redirectContextRelative" value="true"></property>
+    </bean>
+
+
+    <!--配置spring的访问静态资源自动映射-->
+    <mvc:default-servlet-handler/>
+</beans>
