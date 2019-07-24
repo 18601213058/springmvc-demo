@@ -39,4 +39,13 @@ public class InMsgEntity {
     private String PicUrl;
     // 图片消息媒体id，可以调用多媒体文件下载接口拉取数据
     private String MediaId;
+    /**
+     * 事件类型
+     * subscribe(订阅)
+     * unsubscribe(取消订阅)
+     * LOCATION(上报地理位置)
+     * CLICK(点击普通的菜单)
+     * VIEW(点击跳转链接的菜单)
+     */
+    private String Event;
 }

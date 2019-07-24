@@ -59,7 +59,9 @@ public class WXControl {
         OutMsgEntity outMsgEntity = new OutMsgEntity();
         //把原来的发送方设置为接受方 也把原来的接受方设置为发送方
         outMsgEntity.setToUserName(msg.getFromUserName());
+        System.out.println("发送用户FromUserName:"+msg.getFromUserName());
         outMsgEntity.setFromUserName(msg.getToUserName());
+        System.out.println("发给用户ToUserName:"+msg.getToUserName());
         //获取接受消息的类型
         String msgType = msg.getMsgType();
         outMsgEntity.setMsgType(msgType);
@@ -67,9 +69,25 @@ public class WXControl {
         outMsgEntity.setCreateTime(msg.getCreateTime());
         //根据类型设置不同的消息数据
         if("text".equals(msgType)){
-            outMsgEntity.setContent(msg.getContent());
+            //用户发送的内容
+            String inContent = msg.getContent();
+            String outContent = null;
+            if(inContent.contains("谢谢")){
+                outContent = "不客气";
+            }else if(inContent.contains("地址")){
+                outContent = "北京朝阳";
+            }else {
+                outContent = inContent;
+            }
+            outMsgEntity.setContent(outContent);
         }else if("image".equals(msgType)){
             outMsgEntity.setMediaId(new String[]{msg.getMediaId()});
+        }else if("event".equals(msgType)){
+            if("subscribe".equals(msg.getEvent())){
+                outMsgEntity.setContent("欢迎关注！！！");
+                outMsgEntity.setMsgType("text");
+            }
+
         }
         return outMsgEntity;
     }
