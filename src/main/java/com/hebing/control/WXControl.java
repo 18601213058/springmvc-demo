@@ -1,8 +1,11 @@
 package com.hebing.control;
 
+import com.hebing.domain.InMsgEntity;
+import com.hebing.domain.OutMsgEntity;
 import com.hebing.until.SecurityUtils;
 import com.hebing.until.WeChatUntil;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +17,15 @@ import java.util.Arrays;
  */
 @Controller
 public class WXControl {
+    /**
+     * 微信公众号设置  服务器地址 和token
+     * @param signature
+     * @param timestamp
+     * @param nonce
+     * @param echostr
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "wechat",method = RequestMethod.GET)
     @ResponseBody
     public String checkToken(String signature,String timestamp,String nonce,String echostr) throws Exception{
@@ -33,6 +45,33 @@ public class WXControl {
         }
         System.out.println("接入失败");
         return null;
+    }
+
+    /**
+     * 接受微信服务器发来的消息
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "wechat",method = RequestMethod.POST)
+    @ResponseBody
+    public Object handleMessage(@RequestBody InMsgEntity msg) {
+        //创建响应消息对象
+        OutMsgEntity outMsgEntity = new OutMsgEntity();
+        //把原来的发送方设置为接受方 也把原来的接受方设置为发送方
+        outMsgEntity.setToUserName(msg.getFromUserName());
+        outMsgEntity.setFromUserName(msg.getToUserName());
+        //获取接受消息的类型
+        String msgType = msg.getMsgType();
+        outMsgEntity.setMsgType(msgType);
+        //设置创建时间
+        outMsgEntity.setCreateTime(msg.getCreateTime());
+        //根据类型设置不同的消息数据
+        if("text".equals(msgType)){
+            outMsgEntity.setContent(msg.getContent());
+        }else if("image".equals(msgType)){
+            outMsgEntity.setMediaId(new String[]{msg.getMediaId()});
+        }
+        return outMsgEntity;
     }
 
 }
