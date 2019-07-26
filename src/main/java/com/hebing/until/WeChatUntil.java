@@ -35,6 +35,8 @@ public class WeChatUntil {
 
             //缓存access_token
             accessToken = parse.getString("access_token");
+            //重新请求微信获取access_token
+            System.out.println("重新获取access_token:"+accessToken);
             //获取过期时间
             long expires_in = parse.getLong("expires_in");
             expiresTime = new Date().getTime() + (expires_in - 60) * 1000;
@@ -49,6 +51,15 @@ public class WeChatUntil {
 
         HttpUtils.getUrlInfo(CREATE_MENU_URL.replace("ACCESS_TOKEN",getAccessToken()),"POST",menu);
     }
+
+
+
+
+
+
+
+
+
 
     public static void main(String[] args) throws Exception {
         String jsonStr = "{\n" +
