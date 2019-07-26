@@ -74,7 +74,7 @@ public class WeChatUntil {
                 "           {    \n" +
                 "               \"type\":\"view\",\n" +
                 "               \"name\":\"Python课程\",\n" +
-                "               \"url\":\"http://www.wolfcode.cn/zt/python/index.html\"\n" +
+                "               \"url\":\"http://www.wolfcode.cn/python.html\"\n" +
                 "            }]\n" +
                 "       }]\n" +
                 " }";

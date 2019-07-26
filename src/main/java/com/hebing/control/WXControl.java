@@ -55,6 +55,7 @@ public class WXControl {
     @RequestMapping(value = "wechat",method = RequestMethod.POST)
     @ResponseBody
     public Object handleMessage(@RequestBody InMsgEntity msg) {
+        System.out.println(msg.toString());
         //创建响应消息对象
         OutMsgEntity outMsgEntity = new OutMsgEntity();
         //把原来的发送方设置为接受方 也把原来的接受方设置为发送方
@@ -87,7 +88,7 @@ public class WXControl {
             if("subscribe".equals(msg.getEvent())){
                 outMsgEntity.setContent("欢迎关注！！！");
                 outMsgEntity.setMsgType("text");
-            }else if("click".equals(msg.getEvent())){
+            }else if("CLICK".equals(msg.getEvent())){
                 String key = msg.getEventKey();
                 if("classinfo".equals(key)){
                     outContent = "上海Java基础班第05期于2018/05/10开班\n" +
