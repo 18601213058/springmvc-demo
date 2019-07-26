@@ -48,4 +48,6 @@ public class InMsgEntity {
      * VIEW(点击跳转链接的菜单)
      */
     private String Event;
+    //菜单按钮的key值
+    private String EventKey;
 }

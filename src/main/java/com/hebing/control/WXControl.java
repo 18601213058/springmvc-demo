@@ -67,11 +67,12 @@ public class WXControl {
         outMsgEntity.setMsgType(msgType);
         //设置创建时间
         outMsgEntity.setCreateTime(msg.getCreateTime());
+        String outContent = null;
         //根据类型设置不同的消息数据
         if("text".equals(msgType)){
             //用户发送的内容
             String inContent = msg.getContent();
-            String outContent = null;
+
             if(inContent.contains("谢谢")){
                 outContent = "不客气";
             }else if(inContent.contains("地址")){
@@ -85,6 +86,18 @@ public class WXControl {
         }else if("event".equals(msgType)){
             if("subscribe".equals(msg.getEvent())){
                 outMsgEntity.setContent("欢迎关注！！！");
+                outMsgEntity.setMsgType("text");
+            }else if("click".equals(msg.getEvent())){
+                String key = msg.getEventKey();
+                if("classinfo".equals(key)){
+                    outContent = "上海Java基础班第05期于2018/05/10开班\n" +
+                            "广州Java基础班第24期于2018/04/02开班";
+                }else if("address".equals(key)){
+                    outContent = "北京校区：北京昌平区沙河镇万家灯火装饰城2楼8077号\n" +
+                            "广州校区：广州市天河区棠下涌东路大地工业区D栋六楼\n" +
+                            "上海校区：上海市青浦区华新镇华隆路1777号E通世界商务园华新园A座4楼402";
+                }
+                outMsgEntity.setContent(outContent);
                 outMsgEntity.setMsgType("text");
             }
 
